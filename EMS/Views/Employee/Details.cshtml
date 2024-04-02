@@ -1,0 +1,111 @@
+﻿@model EMS.Models.EmployeeInfoViewModel
+@{
+	ViewData["Title"] = "Edit";
+}
+@* <h1>Employee Details</h1>
+<br /> *@
+@* <table class="p-3">
+	<tbody>
+	<tr>
+		<td class="px-3 fw-bold">Name:</td>
+		<td>@Model.FirstName @Model.LastName</td>
+	</tr>	
+	<tr>
+			<td class="px-3 fw-bold">Email:</td>
+		<td>@Model.Email</td>
+	</tr>	
+	<tr>
+			<td class="px-3 fw-bold">Address:</td>
+		<td>@Model.Address</td>
+	</tr>	
+	<tr>
+		<td class="px-3 fw-bold">PhoneNo. :</td>
+		<td>@Model.Phoneno</td>
+	</tr>	
+	<tr>
+			<td class="px-3 fw-bold">Gender:</td>
+			@{
+				if (Model.Gender == 1)
+				{
+					<td>Male</td>
+				}
+				else if (Model.Gender == 2)
+				{
+					<td>Female</td>
+				}
+				else
+				{
+					<td>Other</td>
+				}
+			}
+	</tr>
+	</tbody>
+</table> *@
+
+
+<body class="bg-light">
+<div class="container py-3">
+	<div class="card">
+	<h2 class="bg-black text-white card-header py-4">Edit Employee</h2>
+	<div class="card-body">
+	<form class="border-success" asp-controller="Employee" asp-action="Edit">
+		
+			
+			<div class="row mt-2">
+				<div class="col-sm-6">
+					<label for="FirstName" class="my-1">
+						First Name
+					</label>
+							<input asp-for="FirstName" class="form-control"/>
+				</div>
+				<div class="col-sm-6">
+				<label for="LastName" class="my-1">
+						Last Name
+					</label>
+							<input asp-for="LastName" class="form-control" autocomplete="off" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<label for="Gender" class="my-1">
+						Gender
+					</label>
+					<select class="form-select" asp-for="Gender">
+						<option value=0>Select Gender</option>
+						<option value=1>Male</option>
+						<option value=2>Female</option>
+						<option value=3>Others</option>
+					</select>
+				</div>
+			<div class="col-sm-4">
+				<label for="Email" class="my-1">
+					Email
+				</label>
+				<input asp-for="Email" class="form-control" autocomplete="off" />
+			</div>
+				<div class="col-sm-4">
+					<label for="PhoneNumber" class="my-1">
+						PhoneNumber
+					</label>
+							<input class="form-control" asp-for="Phoneno" autocomplete="off" />
+				</div>
+			</div>
+		<div class="">
+			<label for="Address" class="my-1">
+				Address
+			</label>
+						<input asp-for="Address" class="form-control" autocomplete="off" />
+		</div>
+		<div class="">
+			<label for="ProfilePath" class="my-1">
+				Profile Image
+			</label>
+			<input  asp-for="ProfileImagePath" class="form-control" />
+		</div>
+			<input type="submit" value="Save" class="btn btn-dark my-3" />
+		
+	</form>
+	</div>
+</div>
+</div>
+</body>

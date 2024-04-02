@@ -1,0 +1,43 @@
+﻿@model EMS.Models.SetUpDepertmentViewModel
+@* <h1>Department Details</h1>
+<br />
+<table class="p-3">
+	<tbody>
+		<tr>
+			<td class="px-3 fw-bold">Department Name:</td>
+			<td>@Model.DepartmentName</td>
+		</tr>
+		<tr>
+			<td class="px-3 fw-bold">Department No:</td>
+			<td>@Model.DisplayNo</td>
+		</tr>
+</table> *@
+<body class="bg-light">
+	<div class="container py-3">
+		<div class="card">
+			<h2 class="bg-black text-white card-header py-4">Edit Department</h2>
+			<div class="card-body">
+<form class="border-success" asp-controller="SetUpDepertment" asp-action="Details">
+
+	<input asp-for="DepartmentId" style="display:none;"/>
+	<div class="row mt-2">
+		<div class="col-sm-6">
+			<label for="DepartmentName" class="my-1">
+				Department Name
+			</label>
+			<input asp-for="DepartmentName" class="form-control" />
+		</div>
+		<div class="col-sm-6">
+			<label for="DisplayNo" class="my-1">
+				Display No
+			</label>
+			<input asp-for="DisplayNo" class="form-control" autocomplete="off" />
+		</div>
+	</div>
+	<input type="submit" value="Save" class="btn btn-dark my-3" />
+
+</form>
+	</div>
+</div>
+</div>
+</body>
