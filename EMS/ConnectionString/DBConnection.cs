@@ -15,6 +15,7 @@ namespace EMS.ConnectionString
 		}
 		public DbSet<EmployeeInfo> EmployeeInfo { get; set; }
 		public DbSet<SetUpDepertment> SetUpDepertment {  get; set; }
+		public DbSet<Authentaction> Authentaction {  get; set; }
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);

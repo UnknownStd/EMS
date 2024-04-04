@@ -4,7 +4,7 @@
 @model EMS.Models.EmployeeInfoViewModel
 @{
 }
-<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="DisplayData">Employee Info</a>
+<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Displayemployess">Employee Info</a>
 <h1>Form</h1>
 <form asp-controller="Employee" asp-action="Create" method="post">
 <div class="row">
@@ -36,7 +36,7 @@
     </div>
     <div class="col-sm-4">
         <label>Profile</label>
-        <input asp-for="ProfileImagePath"  class="form-control" placeholder="Enter your profileimagepath" />
+        <input asp-for="ProfileImagePath"  type="file" class="form-control" placeholder="Enter your profileimagepath" />
     </div>
     <div class="colsm-12">
     </div>

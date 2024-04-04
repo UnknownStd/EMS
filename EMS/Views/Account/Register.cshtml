@@ -1,0 +1,28 @@
+﻿@model EMS.Models.RegisterViewModel
+<h1 style="text-align:center;">Register</h1>
+<form asp-controller="Account" asp-action="Register" method="post">
+    <div class="row">
+        <div class="col-sm-6">
+            <label>User Name</label>
+            <input asp-for="UserName" class="form-control" placeholder="Enter your User name" required />
+        </div>
+        <div class="col-sm-6">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" placeholder="Enter your email" required />
+        </div>
+        <div class="col-sm-6">
+            <label>Phone No</label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="Enter your username" required />
+        </div>
+        <div class="col-sm-6">
+            <label>Password</label>
+            <input asp-for="Password" class="form-control" placeholder="Enter your password" required />
+        </div>
+        <div class="col-sm-6">
+            <label>Confirm Password</label>
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" required />
+        </div>
+        <div class="colsm-12">
+        <input type="submit" value="Register" class="btn btn-success mt-3" />
+    </div>
+</form>

@@ -32,6 +32,7 @@ namespace EMS.Services.Implementation
                 department.DeletedBy = 1;
                 department.DeletedDate = DateTime.Now;
             }
+            _connection.Update(department);
 			_connection.SaveChanges();
 ;
 		}

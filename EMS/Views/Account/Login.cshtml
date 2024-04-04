@@ -1,0 +1,19 @@
+﻿
+@model EMS.Models.LoginViewModel
+<h1 style="text-align:center;">Log In</h1>
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div class="row" style="align-content:center;">
+        <div class="col-sm-6">
+            <label>User Name</label>
+            <input asp-for="UserName" class="form-control" placeholder="Enter your User name" required />
+        </div>
+        <div class="colsm-12">
+            </div>
+        <div class="col-sm-6">
+            <label>Password</label>
+            <input asp-for="Password" class="form-control" placeholder="Enter your password" required />
+        </div>
+        <div class="colsm-12">
+        <input type="submit" value="Login" class="btn btn-success mt-3" />
+    </div>
+</form>

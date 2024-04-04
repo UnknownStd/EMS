@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EMS.Entities;
 
 namespace EMS.Models
 {
-    public class EmployeeInfoViewModel
+    public class EmployeeInfoViewModel:BaseEntity
     {
 		public int EmployeeId { get; set; }
 		public string FirstName { get; set; } = string.Empty;

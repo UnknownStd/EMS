@@ -13,7 +13,23 @@ namespace EMS.Services.Implementation
         {
             _connection = connection;
         }
-        public int GetEmployeeById(int employeeId) { return 1; }
+        public EmployeeInfoViewModel GetEmployeeById(int employeeId) 
+        {
+            var data = _connection.EmployeeInfo.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
+            EmployeeInfoViewModel model = new EmployeeInfoViewModel();
+            if(data != null) 
+            {
+                model.EmployeeId = data.EmployeeId;
+			    model.FirstName = data.FirstName;
+			    model.LastName = data.LastName;
+			    model.Email = data.Email;
+			    model.Phoneno = data.Phoneno;
+			    model.Gender = data.Gender;
+			    model.Address = data.Address;
+			    model.ProfileImagePath = data.ProfileImagePath;
+            }
+			return model; 
+        }
         public void SaveEmployee(EmployeeInfoViewModel employee) 
         {
             EmployeeInfo employeeinfo = new EmployeeInfo();
@@ -21,15 +37,25 @@ namespace EMS.Services.Implementation
             employeeinfo.LastName = employee.LastName;
             employeeinfo.Email = employee.Email;
             employeeinfo.Phoneno = employee.Phoneno;
-            employeeinfo.Gender= employee.Gender;
+            employeeinfo.Gender = employee.Gender;
             employeeinfo.Address = employee.Address;
             employeeinfo.ProfileImagePath = employee.ProfileImagePath;
-			employeeinfo.CreatedBy = 1;
-			employeeinfo.CreatedDate = DateTime.Now;
+            employeeinfo.CreatedBy = 1;
+            employeeinfo.CreatedDate = DateTime.Now;
 			_connection.Add(employeeinfo);
 			_connection.SaveChanges();
 		}
-        public void DeleteEmployee(int employeeId) { }
+        public void DeleteEmployee(int employeeId)
+        {
+			var employee = _connection.EmployeeInfo.FirstOrDefault(x => x.EmployeeId == employeeId);
+			if (employee != null)
+			{
+				employee.DeletedBy = 1;
+				employee.DeletedDate = DateTime.Now;
+			}
+            _connection.Update(employee);
+			_connection.SaveChanges();
+		}
 
         public List<EmployeeInfoViewModel> GetEmployeeList()
         {
@@ -49,6 +75,7 @@ namespace EMS.Services.Implementation
 						Phoneno = item.Phoneno,
                         ProfileImagePath = item.ProfileImagePath,
                         EmployeeId = item.EmployeeId,
+                        DeletedBy = item.DeletedBy,
 					});
 				}
 			}
@@ -82,5 +109,24 @@ namespace EMS.Services.Implementation
 
             return employeelist;*/
         }
-    }
+		public bool UpdateEmployee(int employeeId, EmployeeInfoViewModel employee)
+        {
+			var employeedata = _connection.EmployeeInfo.FirstOrDefault(x => x.EmployeeId == employeeId);
+			if (employeedata != null)
+			{
+				employeedata.FirstName = employee.FirstName;
+                employeedata.LastName = employee.LastName;
+				employeedata.Phoneno = employee.Phoneno;
+                employeedata.Email = employee.Email;
+                employeedata.Address = employee.Address;
+                employeedata.Gender = employee.Gender;
+                employeedata.ProfileImagePath = employee.ProfileImagePath;
+				employeedata.UpdatedBy = 1;
+				employeedata.UpdatedDate = DateTime.Now;
+			}
+            _connection.Update(employeedata);
+			_connection.SaveChanges();
+			return true;
+        }
+	}
 }

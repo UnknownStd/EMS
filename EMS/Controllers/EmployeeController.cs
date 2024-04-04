@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using EMS.Services.Interface;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using EMS.Services.Implementation;
 
 namespace EMS.Controllers
 {
@@ -23,12 +24,20 @@ namespace EMS.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult Displaydata() 
+		[HttpGet]
+		public IActionResult Displayemployess()
+		{
+			EmployeeInfoViewModel employeeInfoViewModel = new EmployeeInfoViewModel();
+			var employeelist = _iEmployeeInfoService.GetEmployeeList();
+			employeeInfoViewModel.EmployeeList = employeelist.Where(x => x.DeletedBy == null).ToList();
+			return View(employeeInfoViewModel);
+		}
+		[HttpGet]
+        public IActionResult Displaydata(int employeeid) 
         {
 			EmployeeInfoViewModel employeeInfoViewModel = new EmployeeInfoViewModel();
-            employeeInfoViewModel.EmployeeList = _iEmployeeInfoService.GetEmployeeList();
-            return View(employeeInfoViewModel);
+			var data = _iEmployeeInfoService.GetEmployeeById(employeeid);
+            return View(data);
 		}
         /*post method*/
         [HttpPost]
@@ -36,36 +45,39 @@ namespace EMS.Controllers
         {
             var result = _iEmployeeInfoService;
             result.SaveEmployee(employee);
-            return View();
-        }
-		/*public IActionResult Read()
-        {
-            string connectionstring = configuration.GetConnectionString("DefaultConnectionString");
-
-            SqlConnection connection = new SqlConnection(connectionstring);
-            return View();
-        }*/
+			return RedirectToAction("Displayemployess");
+		}
+        [HttpGet]
 		public IActionResult Details(int EmployeeId)
 		{
-            var data = _iEmployeeInfoService.GetEmployeeList();
-            EmployeeInfoViewModel model = new EmployeeInfoViewModel();
-			/*model = data.Where(x => x.Phoneno == Phoneno).FirstOrDefault();*/
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-			model = (from e in data
-					 where e.EmployeeId == EmployeeId
-					 select new EmployeeInfoViewModel
-                            {
-                                FirstName = e.FirstName,
-                                LastName = e.LastName,
-                                Address = e.Address,
-                                Gender = e.Gender,
-                                Email = e.Email,
-                                Phoneno = e.Phoneno,
-                                ProfileImagePath = e.ProfileImagePath,
-                            } ).FirstOrDefault();
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-			/*model = (from e in data where e.Phoneno == Phoneno select new {e.FirstName,e.LastName}).FirstOrDefault();*/
+			EmployeeInfoViewModel model = new EmployeeInfoViewModel();
+			var data = _iEmployeeInfoService.GetEmployeeList();
+			model = data.Where(x => x.EmployeeId == EmployeeId).FirstOrDefault();
 			return View(model);
+		}
+        [HttpPost]
+		public IActionResult Details(EmployeeInfoViewModel employee)
+		{
+			if (ModelState.IsValid)
+			{
+				_iEmployeeInfoService.UpdateEmployee(employee.EmployeeId, employee);
+			}
+			return RedirectToAction("Displayemployess");
+		}
+		[HttpGet]
+		public IActionResult Delete(int employeeId)
+		{
+		    EmployeeInfoViewModel model = new EmployeeInfoViewModel();
+			var data = _iEmployeeInfoService.GetEmployeeList();
+			model = data.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
+			return View(model);
+		}
+		[HttpPost]
+		public IActionResult Delete(EmployeeInfoViewModel employee)
+		{
+			int employeeid = employee.EmployeeId;
+			_iEmployeeInfoService.DeleteEmployee(employeeid);
+			return RedirectToAction("Displayemployess");
 		}
 	}
 }
